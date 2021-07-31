@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Edit Patient Details</title>
+</head>
+
+<body>
+    <h1>Details</h1>
+    <a class="btn btn-success" href="/add-patient">Add Patient</a>
+    <a class="btn btn-success" href="/patient-list">Patient List</a>
+    <a class="btn btn-success" href="/">Home</a>
+    <div class="container"><br>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert-danger alert">{{ message }}</div>
+            {% else %}
+            <div class="alert-{{ message.tags }} alert">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        <form action="/edit" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <h3>Patient ID : {{patient.id}}</h3>
+            </div>
+            <div class="form-group">
+                <label for="pid">Patient ID:</label>
+                <input class="form-control" id="pid" name="pid" value="{{patient.id}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="fname">First Name:</label>
+                <input class="form-control" id="fname" name="fname" value="{{patient.firstName}}">
+            </div>
+            <div class="form-group">
+                <label for="lname">Last Name:</label>
+                <input class="form-control" id="lname" name="lname" value="{{patient.lastName}}">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">
+                        Gender :
+                    </label>
+                    <select class="form-control" id="gender" name="gender" >
+                        <option class="dropdown-item" {% if patient.gender == 'Male' %} selected {% endif %} >Male</option>
+                        <option class="dropdown-item" {% if patient.gender == 'Female' %} selected {% endif %} >Female</option>
+                        <option class="dropdown-item" {% if patient.gender == 'Others' %} selected {% endif %} >Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input class="form-control" type="number" id="age" name="age" value="{{patient.age}}">
+            </div>
+            <div class="form-group">
+                <label for="disease">Disease(Problem):</label>
+                <input class="form-control" id="disease" name="disease" value="{{patient.disease}}">
+            </div>
+            <div class="form-group">
+                <label for="doctor">Doctor Name:</label>
+                <input class="form-control" id="doctor" name="doctor" value="{{patient.doctorName}}">
+            </div>
+            <div class="form-group">
+                <label for="fees">Doctor Fees:</label>
+                <input class="form-control" type="number" value="500" id="fees" name="fees" value="{{patient.doctorFees}}">
+            </div>
+            <div class="form-group">
+                <label for="startMedsDate">Started meds on date:</label>
+                <input class="form-control" id="startMedsDate" name="startMedsDate" type="date" value="{{patient.startMedsDate}}">
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
